@@ -4,6 +4,7 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "1.8.21"
 }
 
 android {
@@ -25,11 +26,18 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildFeatures.buildConfig = true
+        }
+
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
             buildFeatures.buildConfig = true
         }
     }
@@ -44,7 +52,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     packaging {
         resources {
@@ -67,6 +75,9 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
     implementation("androidx.browser:browser:1.5.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
