@@ -2,6 +2,7 @@ package com.merrychrysler.maldroid.data.repository
 
 import com.merrychrysler.maldroid.data.MalApi
 import com.merrychrysler.maldroid.domain.model.TokenResponse
+import com.merrychrysler.maldroid.domain.model.anime.UserAnimeList
 import com.merrychrysler.maldroid.domain.repository.MalRepository
 
 class MalRepositoryImpl(private val api: MalApi) : MalRepository {
@@ -9,6 +10,10 @@ class MalRepositoryImpl(private val api: MalApi) : MalRepository {
 
     override suspend fun getToken(code: String): TokenResponse? {
         return api.getAccessToken(code, this.codeVerifier).body()
+    }
+
+    override suspend fun getAnimeList(): UserAnimeList? {
+       return api.getAnimeList().body()
     }
 
     override fun setCodeVerifier(codeVerifier: String) {

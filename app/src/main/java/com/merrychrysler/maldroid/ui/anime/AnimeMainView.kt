@@ -10,11 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.merrychrysler.maldroid.ui.anime.listView.AnimeListView
 import kotlinx.coroutines.launch
 
 
 sealed class TabItem(val title: String, val screen: @Composable () -> Unit) {
-    object List : TabItem("My list", { Text("My anime list") })
+    object List : TabItem("My list", { AnimeListView() })
     object Seasonal : TabItem("Seasonal anime", { Text("Seasonal anime") })
 }
 
