@@ -39,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
+import com.merrychrysler.maldroid.ui.anime.AnimeMainView
 import com.merrychrysler.maldroid.ui.login.AuthenticateView
 import com.merrychrysler.maldroid.ui.login.AuthenticateViewModel
 import com.merrychrysler.maldroid.ui.login.LoginView
@@ -141,7 +142,7 @@ fun MainView(modifier: Modifier = Modifier) {
             startDestination = Screen.Anime.route,
             modifier.padding(innerPadding)
         ) {
-            composable(Screen.Anime.route) { Text("anime") }
+            composable(Screen.Anime.route) { AnimeMainView() }
             composable(Screen.Manga.route) { Text("manga") }
             composable(Screen.Profile.route) { Text("profile") }
         }
