@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.merrychrysler.maldroid.BuildConfig
 import com.merrychrysler.maldroid.data.AuthInterceptor
+import com.merrychrysler.maldroid.data.HostInterceptor
 import com.merrychrysler.maldroid.data.MalApi
 import com.merrychrysler.maldroid.data.repository.MalRepositoryImpl
 import com.merrychrysler.maldroid.data.repository.UserPreferencesRepository
@@ -24,6 +25,7 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 private const val USER_PREFERENCES = "user_preferences"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -41,13 +43,15 @@ object AppModule {
     @Singleton
     fun provideHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        hostInterceptor: HostInterceptor
     ): OkHttpClient {
         return OkHttpClient().newBuilder().apply {
             if (BuildConfig.DEBUG) {
                 addInterceptor(loggingInterceptor)
             }
             addInterceptor(authInterceptor)
+            addInterceptor(hostInterceptor)
         }.build()
     }
 
@@ -55,6 +59,12 @@ object AppModule {
     @Singleton
     fun provideAuthInterceptor(): AuthInterceptor {
         return AuthInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHostInterceptor(): HostInterceptor {
+        return HostInterceptor()
     }
 
     @Provides
@@ -84,6 +94,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideUserPreferencesRepository(dataStore: DataStore<Preferences>): UserPreferencesRepository {
-       return UserPreferencesRepository(dataStore)
+        return UserPreferencesRepository(dataStore)
     }
 }

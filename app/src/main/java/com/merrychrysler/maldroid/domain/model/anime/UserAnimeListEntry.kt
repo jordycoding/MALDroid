@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class UserAnimeListEntry(
     val node: AnimteItem,
     @SerialName("list_status")
-    val listStatus: ListStatus
+    val listStatus: ListStatus? = null
 )

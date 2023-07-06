@@ -20,22 +20,22 @@ data class AnimteItem(
     val rank: Int? = null,
     val popularity: Int? = null,
     @SerialName("num_list_users")
-    val numListUsers: Int,
+    val numListUsers: Int? = null,
     @SerialName("num_scoring_users")
-    val numScoringUsers: Int,
+    val numScoringUsers: Int? = null,
     val nsfw: String? = null,
-    val genres: List<Genre>,
+    val genres: List<Genre> ? = null,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: String? = null,
     @SerialName("updated_at")
-    val updatedAt: String,
+    val updatedAt: String? = null,
     @SerialName("media_type")
-    val mediaType: String,
-    val status: String,
+    val mediaType: String? = null,
+    val status: String? = null,
     @SerialName("my_list_status")
     val myListStatus: ListStatus? = null,
     @SerialName("num_episodes")
-    val numEpisodes: Int,
+    val numEpisodes: Int? = null,
     @SerialName("start_season")
     val startSeason: StartSeason? = null,
     val broadcast: Broadcast? = null,
@@ -43,6 +43,6 @@ data class AnimteItem(
     @SerialName("average_episode_duration")
     val averageEpisodeDuration: Int? = null,
     val rating: String? = null,
-    val studios: List<AnimeStudio>
+    val studios: List<AnimeStudio>? = null
 )
 

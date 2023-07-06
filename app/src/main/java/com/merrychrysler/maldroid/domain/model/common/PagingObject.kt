@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PagingObject(
-    val previous: String,
-    val next: String
+    val previous: String? = null,
+    val next: String? = null
 )
