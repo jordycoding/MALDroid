@@ -7,7 +7,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Tv
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -81,10 +88,20 @@ fun NavGraphBuilder.loginGraph(navController: NavController) {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int) {
-    object Anime : Screen("anime", R.string.anime)
-    object Manga : Screen("manga", R.string.manga)
-    object Profile : Screen("profile", R.string.profile)
+sealed class Screen(
+    val route: String,
+    @StringRes val resourceId: Int,
+    val icon: ImageVector,
+    val activeIcon: ImageVector
+) {
+    object Anime : Screen("anime", R.string.anime, Icons.Outlined.Tv, Icons.Filled.Tv)
+    object Manga : Screen("manga", R.string.manga, Icons.Outlined.Book, Icons.Filled.Book)
+    object Profile : Screen(
+        "profile",
+        R.string.profile,
+        Icons.Outlined.AccountCircle,
+        Icons.Filled.AccountCircle
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,10 +115,13 @@ fun MainView(modifier: Modifier = Modifier) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 items.forEach { screen ->
+                    val active =
+                        currentDestination?.hierarchy?.any { it.route == screen.route } == true
+                    val icon = if (active) screen.activeIcon else screen.icon
                     NavigationBarItem(
-                        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                        icon = { Icon((icon), contentDescription = null) },
                         label = { Text(stringResource(id = screen.resourceId)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        selected = active,
                         onClick = {
                             navController.navigate(screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
