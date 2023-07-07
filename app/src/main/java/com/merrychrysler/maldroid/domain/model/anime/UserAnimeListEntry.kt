@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserAnimeListEntry(
-    val node: AnimteItem,
+    val node: AnimeItem,
     @SerialName("list_status")
     val listStatus: ListStatus? = null
 )

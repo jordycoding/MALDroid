@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserAnimeList(
-    val data: List<UserAnimeListEntry>,
-    val paging: PagingObject
+    val data: List<UserAnimeListEntry>? = null,
+    val paging: PagingObject ? = null
 )

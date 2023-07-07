@@ -34,7 +34,7 @@ fun AnimeMainView(modifier: Modifier = Modifier) {
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } })
             }
         }
-        HorizontalPager(pageCount = tabs.size, state = pagerState) {
+        HorizontalPager(pageCount = tabs.size, state = pagerState, userScrollEnabled = false) {
             tabs[pagerState.currentPage].screen()
         }
     }
